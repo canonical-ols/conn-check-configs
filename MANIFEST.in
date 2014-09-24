@@ -1,3 +1,4 @@
 LICENSE
-**/*.rst
-**/*.txt
+*.rst
+*.txt
+conn_check_configs/*.txt
