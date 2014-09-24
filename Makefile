@@ -19,7 +19,7 @@ clean: clean-wheels
 	find . -name "*.pyc" -delete
 
 install-debs:
-	sudo xargs --arg-file deb-requirements.txt apt-get install -y
+	sudo xargs --arg-file deb-dependencies.txt apt-get install -y
 
 pip-wheel: $(ENV)
 	@$(ENV)/bin/pip install wheel
@@ -30,6 +30,11 @@ $(WHEELSDIR):
 build-wheels: pip-wheel $(WHEELSDIR) $(ENV)
 	$(ENV)/bin/pip wheel --wheel-dir=$(WHEELSDIR) .
 
+upload: test
+	$(ENV)/bin/python setup.py sdist bdist_wheel upload
+	@echo
+	@echo "Don't forget: bzr tag" `cat conn_check/version.txt` '&& bzr push'
 
-.PHONY: test build pip-wheel build-wheels clean install-debs
+
+.PHONY: test build pip-wheel build-wheels clean install-debs upload
 .DEFAULT_GOAL := test
