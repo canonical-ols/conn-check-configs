@@ -1,0 +1,5 @@
+gcc
+libffi-dev
+python-dev
+python-pip
+python-virtualenv
