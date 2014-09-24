@@ -1,4 +1,3 @@
-LICENSE
-*.rst
-*.txt
-conn_check_configs/*.txt
+include LICENSE
+include **/*.rst
+include **/*.txt
