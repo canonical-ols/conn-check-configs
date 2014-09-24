@@ -30,10 +30,10 @@ $(WHEELSDIR):
 build-wheels: pip-wheel $(WHEELSDIR) $(ENV)
 	$(ENV)/bin/pip wheel --wheel-dir=$(WHEELSDIR) .
 
-upload: test
+upload: test pip-wheel
 	$(ENV)/bin/python setup.py sdist bdist_wheel upload
 	@echo
-	@echo "Don't forget: bzr tag" `cat conn_check/version.txt` '&& bzr push'
+	@echo "Don't forget: bzr tag" `cat conn_check_configs/version.txt` '&& bzr push'
 
 
 .PHONY: test build pip-wheel build-wheels clean install-debs upload
