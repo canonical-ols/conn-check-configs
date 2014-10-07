@@ -9,9 +9,11 @@ import sys
 import yaml
 
 
-extra_check_makers = []
-statsd_send = 'conncheck.test:1|c'
-statsd_expect = ''
+EXTRA_CHECK_MAKERS = []
+STATSD_CHECK = {
+    'send': 'conncheck.test:1|c',
+    'expect': '',
+}
 
 
 class SettingsDict(dict):
@@ -134,7 +136,7 @@ def gather_checks(options):
     checks.extend(make_memcache_checks(settings, options))
     checks.extend(make_statsd_checks(settings, options))
 
-    for maker in extra_check_makers:
+    for maker in EXTRA_CHECK_MAKERS:
         checks.extend(maker(settings, options))
 
     return checks
@@ -149,7 +151,19 @@ def main(*args):
     parser.add_argument('-d', '--database-name',
                         dest="db_name",
                         action="store")
+    parser.add_argument('--statsd_send',
+                        dest="statsd_send",
+                        action="store")
+    parser.add_argument('--statsd_expect',
+                        dest="statsd_expect",
+                        action="store")
     opts = parser.parse_args(args)
+
+    if opts.statsd_send:
+        STATSD_CHECK['send'] = opts.statsd_send
+
+    if opts.statsd_expect:
+        STATSD_CHECK['expect'] = opts.statsd_expect
 
     checks = gather_checks(opts)
 
