@@ -19,13 +19,26 @@ Django
 You can export common settings from a Django application using the `conn-check-django` command line
 utility, which takes the following arguments:
 
- - `-m`, `--settings-module`: the Python module for Django to import.
- - `-d`, `--database-name`: the database schema name if not set as `NAME` in the Django settings.
+ - ``-m``, ``--settings-module``: the Python module for Django to import.
+ - ``-d``, ``--database-name``: the database schema name if not set as `NAME` in the Django settings.
+ - ``--statsd-send``: Optional string to send with statsd checks (defaults to a conn-check specific metric).
+ - ``--statsd-expect``: Optional response string to expect from a statsd check.
 
  Followed by a path to the generated YAML file, for example::
 
      $ conn-check-django -m myapp.settings /tmp/myapp-conncheck.yaml
      $ conn-check /tmp/myapp-conncheck.yaml
+
+
+Extending configuration generation
+----------------------------------
+
+You may want to extend the generated checks with custom (or unsupported) settings,
+this can be done by creating your own script and importing all the functions/variables
+from the relevant `conn_check_configs` submodule (e.g. `django`), and then extending
+the ``EXTRA_CHECK_MAKERS`` list with your own check making functions, which must take
+2 arguments: the Django settings module and the options from the CLI (usually a ``argparse.Namespace`` instance).
+
 
 Building wheels
 ---------------

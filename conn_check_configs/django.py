@@ -9,6 +9,13 @@ import sys
 import yaml
 
 
+EXTRA_CHECK_MAKERS = []
+STATSD_CHECK = {
+    'send': 'conncheck.test:1|c',
+    'expect': '',
+}
+
+
 class SettingsDict(dict):
     """Wrapper for Django settings object that allows access as a dict"""
 
@@ -114,8 +121,8 @@ def make_statsd_checks(settings, options):
             'type': 'udp',
             'host': settings['STATSD_HOST'],
             'port': int(settings.get('STATSD_PORT', 8125)),
-            'send': 'conncheck.test:1|c',
-            'expect': '',
+            'send': statsd_send,
+            'expect': statsd_expect,
         })
     return checks
 
@@ -128,6 +135,10 @@ def gather_checks(options):
     checks.extend(make_celery_checks(settings, options))
     checks.extend(make_memcache_checks(settings, options))
     checks.extend(make_statsd_checks(settings, options))
+
+    for maker in EXTRA_CHECK_MAKERS:
+        checks.extend(maker(settings, options))
+
     return checks
 
 
@@ -140,7 +151,19 @@ def main(*args):
     parser.add_argument('-d', '--database-name',
                         dest="db_name",
                         action="store")
+    parser.add_argument('--statsd_send',
+                        dest="statsd_send",
+                        action="store")
+    parser.add_argument('--statsd_expect',
+                        dest="statsd_expect",
+                        action="store")
     opts = parser.parse_args(args)
+
+    if opts.statsd_send:
+        STATSD_CHECK['send'] = opts.statsd_send
+
+    if opts.statsd_expect:
+        STATSD_CHECK['expect'] = opts.statsd_expect
 
     checks = gather_checks(opts)
 
