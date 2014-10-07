@@ -1,7 +1,7 @@
 ChangeLog for conn-check-configs
 ================================
 
-1.0.1 (unreleased)
+1.0.1 (07-10-2014)
 ------------------
 
  - Added CLI flags and module level variables to set statsd send/expect values for Django settings.
