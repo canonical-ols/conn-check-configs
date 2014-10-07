@@ -9,6 +9,11 @@ import sys
 import yaml
 
 
+extra_check_makers = []
+statsd_send = 'conncheck.test:1|c'
+statsd_expect = ''
+
+
 class SettingsDict(dict):
     """Wrapper for Django settings object that allows access as a dict"""
 
@@ -114,8 +119,8 @@ def make_statsd_checks(settings, options):
             'type': 'udp',
             'host': settings['STATSD_HOST'],
             'port': int(settings.get('STATSD_PORT', 8125)),
-            'send': 'conncheck.test:1|c',
-            'expect': '',
+            'send': statsd_send,
+            'expect': statsd_expect,
         })
     return checks
 
@@ -128,6 +133,10 @@ def gather_checks(options):
     checks.extend(make_celery_checks(settings, options))
     checks.extend(make_memcache_checks(settings, options))
     checks.extend(make_statsd_checks(settings, options))
+
+    for maker in extra_check_makers:
+        checks.extend(maker(settings, options))
+
     return checks
 
 
