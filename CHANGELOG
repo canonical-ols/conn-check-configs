@@ -1,6 +1,11 @@
 ChangeLog for conn-check-configs
 ================================
 
+1.0.2 (08-10-2014)
+------------------
+
+ - Fix variable error with statsd checks.
+
 1.0.1 (07-10-2014)
 ------------------
 

@@ -121,8 +121,8 @@ def make_statsd_checks(settings, options):
             'type': 'udp',
             'host': settings['STATSD_HOST'],
             'port': int(settings.get('STATSD_PORT', 8125)),
-            'send': statsd_send,
-            'expect': statsd_expect,
+            'send': STATSD_CHECK['send'],
+            'expect': STATSD_CHECK['expect'],
         })
     return checks
 
