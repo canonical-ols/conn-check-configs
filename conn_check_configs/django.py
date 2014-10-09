@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import argparse
 import collections
@@ -144,19 +144,32 @@ def gather_checks(options):
 
 def main(*args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('output_file')
+    output_group = parser.add_mutually_exclusive_group()
+    output_group.add_argument('-f', '--output-file',
+                              dest='output_file',
+                              required=False,
+                              help='File path to save YAML config to')
+    output_group.add_argument('-P', '--print',
+                              dest="print",
+                              action="store_true",
+                              help='Output YAML config to STDOUT')
     parser.add_argument('-m', '--settings-module',
                         dest="settings_module",
-                        action="store")
+                        action="store",
+                        help='Django Python settings module import path')
     parser.add_argument('-d', '--database-name',
                         dest="db_name",
-                        action="store")
+                        action="store",
+                        help='Database schema if not discoverable from '
+                             'settings module')
     parser.add_argument('--statsd_send',
                         dest="statsd_send",
-                        action="store")
+                        action="store",
+                        help='Test string to send to StatsD server')
     parser.add_argument('--statsd_expect',
                         dest="statsd_expect",
-                        action="store")
+                        action="store",
+                        help='Successful response string from StatsD test')
     opts = parser.parse_args(args)
 
     if opts.statsd_send:
@@ -165,10 +178,13 @@ def main(*args):
     if opts.statsd_expect:
         STATSD_CHECK['expect'] = opts.statsd_expect
 
-    checks = gather_checks(opts)
+    output = yaml.dump(gather_checks(opts), default_flow_style=False)
 
-    with open(opts.output_file, 'w') as f:
-        yaml.dump(checks, f, default_flow_style=False)
+    if opts.print:
+        print(output, file=sys.stdout)
+    else:
+        with open(opts.output_file, 'w') as f:
+            f.write(output)
 
     return 0
 
