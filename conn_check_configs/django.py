@@ -144,15 +144,10 @@ def gather_checks(options):
 
 def main(*args):
     parser = argparse.ArgumentParser()
-    output_group = parser.add_mutually_exclusive_group()
-    output_group.add_argument('-f', '--output-file',
+    parser.add_argument('-f', '--output-file',
                               dest='output_file',
                               required=False,
                               help='File path to save YAML config to')
-    output_group.add_argument('-P', '--print',
-                              dest="print",
-                              action="store_true",
-                              help='Output YAML config to STDOUT')
     parser.add_argument('-m', '--settings-module',
                         dest="settings_module",
                         action="store",
@@ -180,11 +175,11 @@ def main(*args):
 
     output = yaml.dump(gather_checks(opts), default_flow_style=False)
 
-    if opts.print:
-        print(output, file=sys.stdout)
-    else:
+    if opts.output_file:
         with open(opts.output_file, 'w') as f:
             f.write(output)
+    else:
+        print(output, file=sys.stdout)
 
     return 0
 

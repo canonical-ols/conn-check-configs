@@ -23,7 +23,7 @@ utility, which takes the following arguments:
  - ``-d``, ``--database-name``: the database schema name if not set as `NAME` in the Django settings.
  - ``--statsd-send``: Optional string to send with statsd checks (defaults to a conn-check specific metric).
  - ``--statsd-expect``: Optional response string to expect from a statsd check.
- - ``-P``, ``--print``: Optionally output to `stdout` rather than a file.
+ - ``-f``, ``output-file``: Optionally output to a file rather than ``STDOUT``.
 
  Followed by a path to the generated YAML file, for example::
 
