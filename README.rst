@@ -27,7 +27,7 @@ utility, which takes the following arguments:
 
  Followed by a path to the generated YAML file, for example::
 
-     $ conn-check-django -m myapp.settings /tmp/myapp-conncheck.yaml
+     $ conn-check-django -m myapp.settings -f /tmp/myapp-conncheck.yaml
      $ conn-check /tmp/myapp-conncheck.yaml
 
 
