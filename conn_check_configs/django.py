@@ -147,7 +147,8 @@ def main(*args):
     parser.add_argument('-f', '--output-file',
                               dest='output_file',
                               required=False,
-                              help='File path to save YAML config to')
+                              help='File path to save YAML config to rather'
+                                   ' than the default of printing to STDOUT')
     parser.add_argument('-m', '--settings-module',
                         dest="settings_module",
                         action="store",
@@ -165,6 +166,11 @@ def main(*args):
                         dest="statsd_expect",
                         action="store",
                         help='Successful response string from StatsD test')
+    # Added so old reliances on -p/--print flag don't break
+    parser.add_argument('-p', '--print',
+                              dest='print',
+                              action='store_true',
+                              help='')
     opts = parser.parse_args(args)
 
     if opts.statsd_send:

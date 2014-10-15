@@ -1,6 +1,11 @@
 ChangeLog for conn-check-configs
 ================================
 
+1.0.5 (15-10-2014)
+------------------
+
+ - Re-added -p/--print flag that does nothing to maintain backwards compatbility.
+
 1.0.4 (13-10-2014)
 ------------------
 
