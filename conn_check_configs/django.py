@@ -39,16 +39,33 @@ def get_settings(settings_module):
 
 def make_postgres_checks(settings, options):
     checks = []
+    engines = {
+        'django.db.backends.postgresql_psycopg2': 'postgres',
+        'django.db.backends.mysql': 'mysql',
+        'django.db.backends.oracle': 'oracle',
+    }
     for name, db in settings.get('DATABASES', {}).items():
-        if db.get('ENGINE') == 'django.db.backends.postgresql_psycopg2':
-            checks.append({
-                'type': 'postgres',
+        if db['ENGINE'] in engines and not str(db['HOST']).startswith('/'):
+            check = {
+                'type': engines[db['engine']],
                 'database': db.get('NAME', options.db_name),
                 'host': db['HOST'],
-                'port': int(db['PORT']),
-                'username': db['USER'],
-                'password': db['PASSWORD'],
-            })
+            }
+
+            port = db['PORT']
+            if port is not None:
+                check['port'] = int(port)
+
+            username = db['USER']
+            if username is not None:
+                check['username'] = username
+
+            password = db['PASSWORD']
+            if password is not None:
+                check['password'] = password
+
+            checks.append(check)
+
     return checks
 
 
