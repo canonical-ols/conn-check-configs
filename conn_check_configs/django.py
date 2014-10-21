@@ -51,7 +51,7 @@ def make_postgres_checks(settings, options):
         # https://docs.djangoproject.com/en/dev/ref/settings/#host
         if db['ENGINE'] in engines and not str(db['HOST']).startswith('/'):
             check = {
-                'type': engines[db['engine']],
+                'type': engines[db['ENGINE']],
                 'database': db.get('NAME', options.db_name),
                 'host': db['HOST'],
             }
