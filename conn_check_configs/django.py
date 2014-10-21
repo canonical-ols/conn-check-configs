@@ -45,6 +45,9 @@ def make_postgres_checks(settings, options):
         'django.db.backends.oracle': 'oracle',
     }
     for name, db in settings.get('DATABASES', {}).items():
+        # We exclude hosts starting with a forward slash (/) as these are
+        # always socket filepaths for MySQL and PostgreSQL, see:
+        # https://docs.djangoproject.com/en/dev/ref/settings/#host
         if db['ENGINE'] in engines and not str(db['HOST']).startswith('/'):
             check = {
                 'type': engines[db['engine']],
