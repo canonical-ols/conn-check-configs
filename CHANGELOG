@@ -1,7 +1,7 @@
 ChangeLog for conn-check-configs
 ================================
 
-1.0.6 (unreleased)
+1.0.6 (22-10-2014)
 ------------------
 
  - Refactored Django databases export to support more engines and skip filepath domain sockets.
