@@ -4,3 +4,9 @@ dist
 wheels
 virtualenv
 .pc
+debian/python-conn-check
+debian/files
+debian/python-conn-check.debhelper.log
+debian/python-conn-check.postinst.debhelper
+debian/python-conn-check.prerm.debhelper
+debian/python-conn-check.substvars
