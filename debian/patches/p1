@@ -1,0 +1,75 @@
+Description: Add make targets for deb generation
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ conn-check-configs-1.0.6/Makefile
+@@ -0,0 +1,58 @@
++ENV=virtualenv
++WHEELSDIR=./wheels
++CONN_CHECK_CONFIGS_VERSION=$(shell cat conn_check_configs/version.txt)
++CONN_CHECK_PPA=ppa:wesmason/conn-check
++
++$(ENV):
++	virtualenv $(ENV)
++
++build: $(ENV)
++	$(ENV)/bin/pip install nose pyyaml
++	$(ENV)/bin/python setup.py develop
++
++test: $(ENV)
++	$(ENV)/bin/nosetests
++
++clean-wheels:
++	-rm -r $(WHEELSDIR)
++
++clean: clean-wheels
++	-rm -r $(ENV)
++	find . -name "*.pyc" -delete
++
++install-debs:
++	sudo xargs --arg-file deb-dependencies.txt apt-get install -y
++
++install-deb-pkg-debs: install-debs
++	sudo apt-get install -y build-essential packaging-dev dh-make
++
++pip-wheel: $(ENV)
++	@$(ENV)/bin/pip install wheel
++
++$(WHEELSDIR):
++	mkdir $(WHEELSDIR)
++
++build-wheels: pip-wheel $(WHEELSDIR) $(ENV)
++	$(ENV)/bin/pip wheel --wheel-dir=$(WHEELSDIR) .
++
++upload: test pip-wheel
++	$(ENV)/bin/python setup.py sdist bdist_wheel upload
++	@echo
++	@echo "Don't forget: bzr tag" `cat conn_check_configs/version.txt` '&& bzr push'
++
++build-deb: $(ENV)
++	-rm ../python-conn-check_$(CONN_CHECK_CONFIGS_VERSION)-*
++	-rm ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION)-*
++	$(ENV)/bin/python setup.py sdist
++	cp dist/conn-check-configs-$(CONN_CHECK_CONFIGS_VERSION).tar.gz ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION).orig.tar.gz
++	debuild -S -sa
++
++test-build-deb: build-deb
++	debuild
++
++update-ppa:
++	cd .. && dput $(CONN_CHECK_PPA) python-conn-check_$(CONN_CHECK_CONFIGS_VERSION)-*_source.changes
++
++
++.PHONY: test build pip-wheel build-wheels clean install-debs upload
++.DEFAULT_GOAL := test
