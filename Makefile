@@ -1,5 +1,7 @@
 ENV=virtualenv
 WHEELSDIR=./wheels
+CONN_CHECK_CONFIGS_VERSION=$(shell cat conn_check_configs/version.txt)
+CONN_CHECK_PPA=ppa:wesmason/conn-check
 
 $(ENV):
 	virtualenv $(ENV)
@@ -21,6 +23,9 @@ clean: clean-wheels
 install-debs:
 	sudo xargs --arg-file deb-dependencies.txt apt-get install -y
 
+install-deb-pkg-debs: install-debs
+	sudo apt-get install -y build-essential packaging-dev dh-make
+
 pip-wheel: $(ENV)
 	@$(ENV)/bin/pip install wheel
 
@@ -34,6 +39,19 @@ upload: test pip-wheel
 	$(ENV)/bin/python setup.py sdist bdist_wheel upload
 	@echo
 	@echo "Don't forget: bzr tag" `cat conn_check_configs/version.txt` '&& bzr push'
+
+build-deb: $(ENV)
+	-rm ../python-conn-check_$(CONN_CHECK_CONFIGS_VERSION)-*
+	-rm ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION)-*
+	$(ENV)/bin/python setup.py sdist
+	cp dist/conn-check-configs-$(CONN_CHECK_CONFIGS_VERSION).tar.gz ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION).orig.tar.gz
+	debuild -S -sa
+
+test-build-deb: build-deb
+	debuild
+
+update-ppa:
+	cd .. && dput $(CONN_CHECK_PPA) python-conn-check_$(CONN_CHECK_CONFIGS_VERSION)-*_source.changes
 
 
 .PHONY: test build pip-wheel build-wheels clean install-debs upload
