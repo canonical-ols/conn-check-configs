@@ -1,0 +1,15 @@
+Source: conn-check-configs
+Maintainer: Wes Mason <wesley.mason@canonical.com>
+Section: python
+Priority: optional
+Build-Depends: python-setuptools (>= 0.6b3), python-all (>= 2.6.6-3), debhelper (>= 7.4.3)
+Standards-Version: 3.9.1
+
+
+
+Package: python-conn-check
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}, python-yaml
+Description: Utilities for generating conn-check YAML configs from other
+ This is a set of Python modules and utilities for generating conn-check
+ config YAML from other sources, such as Django settings modules.
