@@ -10,3 +10,4 @@ debian/python-conn-check.debhelper.log
 debian/python-conn-check.postinst.debhelper
 debian/python-conn-check.prerm.debhelper
 debian/python-conn-check.substvars
+python-conn-check-configs

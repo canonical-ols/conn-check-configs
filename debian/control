@@ -7,7 +7,7 @@ Standards-Version: 3.9.5
 
 
 
-Package: python-conn-check
+Package: python-conn-check-configs
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python-yaml
 Description: Utilities for generating conn-check YAML configs from other
