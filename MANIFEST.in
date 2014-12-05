@@ -1,3 +1,6 @@
 include LICENSE
-include **/*.rst
-include **/*.txt
+include CHANGELOG
+include *.rst
+include *.txt
+recursive-include conn_check_configs *.txt
+recursive-include conn_check_configs *.xml
