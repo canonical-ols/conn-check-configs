@@ -51,7 +51,7 @@ test-build-deb: build-deb
 	debuild
 
 update-ppa:
-	cd .. && dput $(CONN_CHECK_PPA) python-conn-check_$(CONN_CHECK_CONFIGS_VERSION)-*_source.changes
+	cd .. && dput $(CONN_CHECK_PPA) conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION)-*_source.changes
 
 
 .PHONY: test build pip-wheel build-wheels clean install-debs upload
