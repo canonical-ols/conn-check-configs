@@ -3,3 +3,6 @@ conn_check_configs.egg-info
 dist
 wheels
 virtualenv
+.pc
+debian/python-conn-check*
+debian/files
