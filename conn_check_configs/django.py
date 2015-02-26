@@ -98,7 +98,7 @@ def make_celery_checks(settings, options):
     backend = settings['BROKER_BACKEND']
     if ((not backend and host) or backend in ('amqp', 'redis')):
         check = {
-            'type': backend,
+            'type': backend or 'amqp',
             'host': host,
             'port': int(settings['BROKER_PORT']),
             'username': settings['BROKER_USER'],
