@@ -41,8 +41,9 @@ upload: test pip-wheel
 	@echo "Don't forget: bzr tag" `cat conn_check_configs/version.txt` '&& bzr push'
 
 build-deb: $(ENV)
-	-rm ../python-conn-check_$(CONN_CHECK_CONFIGS_VERSION)-*
-	-rm ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION)-*
+	-rm ../python-conn-check_*-*
+	-rm ../conn-check-configs_*-*
+	-rm ../conn-check-configs_*.orig.tar.gz
 	$(ENV)/bin/python setup.py sdist
 	cp dist/conn-check-configs-$(CONN_CHECK_CONFIGS_VERSION).tar.gz ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION).orig.tar.gz
 	debuild -S -sa
