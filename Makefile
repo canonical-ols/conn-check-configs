@@ -43,7 +43,7 @@ upload: test pip-wheel
 build-deb: $(ENV)
 	-rm ../python-conn-check_*-*
 	-rm ../conn-check-configs_*-*
-	-rm ../conn-check-configs_*.orig.tar.gz
+	-ls ../conn-check-configs_*.orig.tar.gz | grep -v '.*$(CONN_CHECK_CONFIGS_VERSION).*' | xargs rm
 	$(ENV)/bin/python setup.py sdist
 	cp dist/conn-check-configs-$(CONN_CHECK_CONFIGS_VERSION).tar.gz ../conn-check-configs_$(CONN_CHECK_CONFIGS_VERSION).orig.tar.gz
 	debuild -S -sa
