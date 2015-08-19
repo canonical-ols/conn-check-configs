@@ -138,10 +138,15 @@ def make_statsd_checks(settings, options):
     # For now we just want to make sure we can reach statsd via UDP
     checks = []
     if settings['STATSD_HOST']:
+        if ':' in settings['STATSD_HOST']:
+            host, port = settings['STATSD_HOST'].split(':')
+        else:
+            host = settings['STATSD_HOST']
+            port = int(settings.get('STATSD_PORT', 8125))
         checks.append({
             'type': 'udp',
-            'host': settings['STATSD_HOST'],
-            'port': int(settings.get('STATSD_PORT', 8125)),
+            'host': host,
+            'port': port,
             'send': STATSD_CHECK['send'],
             'expect': STATSD_CHECK['expect'],
         })
