@@ -75,7 +75,11 @@ def make_postgres_checks(settings, options):
 
 def make_oops_checks(settings, options):
     checks = []
-    oopses = settings.get('OOPSES', {})
+    for key in ('OOPS', 'OOPSES'):
+        oopses = settings.get(key, {})
+        if oopses:
+            break
+
     publishers = oopses.get('publishers', [])
     for publisher in publishers:
         if publisher['type'] == 'amqp':

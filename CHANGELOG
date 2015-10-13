@@ -1,6 +1,11 @@
 ChangeLog for conn-check-configs
 ================================
 
+1.0.9 (13-10-2015)
+------------------
+
+ - Generate OOPS amqp checks for both the 'OOPS' setting name as well as OOPSES.
+
 1.0.8 (19-08-2015)
 ------------------
 
