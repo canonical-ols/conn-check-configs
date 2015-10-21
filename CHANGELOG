@@ -1,6 +1,12 @@
 ChangeLog for conn-check-configs
 ================================
 
+1.0.10 (21-10-2015)
+------------------
+
+ - Allow for port in OOPS amqp checks to being set after a colon in the host param.
+
+
 1.0.9 (13-10-2015)
 ------------------
 

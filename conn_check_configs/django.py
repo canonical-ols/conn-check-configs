@@ -83,11 +83,17 @@ def make_oops_checks(settings, options):
     publishers = oopses.get('publishers', [])
     for publisher in publishers:
         if publisher['type'] == 'amqp':
+            if ':' in publisher['host']:
+                host, port = publisher['host'].split(':')
+            else:
+                host = publisher['host']
+                port = publisher.get('port', 5672)
+
             checks.append({
                 'type': 'amqp',
                 'vhost': publisher['vhost'],
-                'host': publisher['host'],
-                'port': publisher.get('port', 5672),
+                'host': host,
+                'port': port,
                 'username': publisher['user'],
                 'password': publisher['password'],
             })
