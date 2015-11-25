@@ -17,7 +17,7 @@ setup(
     version=__version__,
     author='James Westby, Wes Mason',
     author_email='james.westby@canonical.com, wesley.mason@canonical.com',
-    url='https://launchpad.net/conn-check',
+    url='http://conn-check.org/',
     packages=find_packages(exclude=['ez_setup']),
     install_requires=['pyyaml'],
     package_data={'conn_check_configs': ['version.txt']},
