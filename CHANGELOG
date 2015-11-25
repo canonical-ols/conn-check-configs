@@ -1,11 +1,15 @@
 ChangeLog for conn-check-configs
 ================================
 
+1.0.11 (25-11-2015)
+------------------
+
+ - Relicensed conn-check-configs as LGPLv3 for inclusion in a wider array of apps.
+
 1.0.10 (21-10-2015)
 ------------------
 
  - Allow for port in OOPS amqp checks to being set after a colon in the host param.
-
 
 1.0.9 (13-10-2015)
 ------------------

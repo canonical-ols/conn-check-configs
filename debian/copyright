@@ -4,24 +4,24 @@ Upstream-Contact: Wes Mason <wesley.mason@canonical.com>
 Source: https://launchpad.net/conn-check
 
 Files: *
-Copyright: 2014, Canonical Ltd.
-License: GPL-3+
+Copyright: 2015, Canonical Ltd.
+License: LGPL-3+
 
-License: GPL-3+
- Ansible is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
+License: LGPL-3+
+ conn-check-configs is free software: you can redistribute it and/or modify
+ it under the terms of the Lesser GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
  .
- Ansible is distributed in the hope that it will be useful,
+ conn-check-configs is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+ Lesser GNU General Public License for more details.
  .
- You should have received a copy of the GNU General Public License
- along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
+ You should have received a copy of the Lesser GNU General Public License
+ along with conn-check-configs.  If not, see <http://www.gnu.org/licenses/>.
  .
- On Debian systems, the full text of the GNU General Public
+ On Debian systems, the full text of the Lesser GNU General Public
  License version 3 can be found in the file
- `/usr/share/common-licenses/GPL-3'.
+ `/usr/share/common-licenses/LGPL-3'.
 

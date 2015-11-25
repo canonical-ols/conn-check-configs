@@ -4,7 +4,7 @@
 import os
 cwd = os.path.dirname(__file__)
 __version__ = open(os.path.join(cwd, 'conn_check_configs/version.txt'),
-                    'r').read().strip()
+                   'r').read().strip()
 
 from setuptools import setup, find_packages
 
@@ -27,7 +27,7 @@ setup(
             'conn-check-django = conn_check_configs.django:run',
         ],
     },
-    license='GPL3',
+    license='LGPL3',
     classifiers=[
         "Topic :: System :: Networking",
         "Development Status :: 4 - Beta",

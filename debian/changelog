@@ -1,3 +1,10 @@
+conn-check-configs (1.0.11-1) trusty; urgency=low
+
+  * Relicensed conn-check-configs as LGPLv3 for inclusion in a wider array of
+    apps.
+
+ -- Wes Mason (1stvamp) <wes@1stvamp.org>  Wed, 25 Nov 2015 21:17:11 +0000
+
 conn-check-configs (1.0.10-1) trusty; urgency=low
 
   * Allow for port in OOPS amqp checks to being set after a colon in the host param.
